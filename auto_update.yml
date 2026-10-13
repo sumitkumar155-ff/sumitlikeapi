@@ -1,8 +1,8 @@
-name: Auto Update Tokens
+name: Auto Update Tokens Every Hour
 
 on:
   schedule:
-    - cron: '0 */5 * * *' # Har 5 ghante me automatic chalega
+    - cron: '0 * * * *' # Yeh ab har 1 ghante me automatic run hoga
   workflow_dispatch: # Manual test karne ke liye button
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
         run: |
           git config --global user.name "GitHub Action Bot"
           git config --global user.email "action@github.com"
-          git add account_ind.json
-          git commit -m "Auto-update tokens in account_ind.json [skip ci]" || exit 0
+          git add "account_ind(p).json"
+          git commit -m "Auto-update tokens every hour [skip ci]" || exit 0
           git push
           
