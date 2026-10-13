@@ -1,0 +1,39 @@
+name: Auto Update Tokens
+
+on:
+  schedule:
+    - cron: '0 */5 * * *' # Har 5 ghante me automatic chalega
+  workflow_dispatch: # Manual test karne ke liye button
+
+jobs:
+  update-tokens:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          pip install requests
+
+      - name: Run Token Updater Script
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          ADMIN_ID: ${{ secrets.ADMIN_ID }}
+          API_URL: ${{ secrets.API_URL }}
+        run: |
+          python update_tokens.py
+
+      - name: Commit and Push Changes back to GitHub
+        run: |
+          git config --global user.name "GitHub Action Bot"
+          git config --global user.email "action@github.com"
+          git add account_ind.json
+          git commit -m "Auto-update tokens in account_ind.json [skip ci]" || exit 0
+          git push
+          
