@@ -4,7 +4,7 @@ import os
 import requests
 
 API_URL = "https://sumit-jwt-xi.vercel.app/token"
-JSON_FILE = "account_ind(p).json"
+JSON_FILE = "token_ind.json"
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 ADMIN_ID = os.environ.get("ADMIN_ID")
 
@@ -37,7 +37,7 @@ def fetch_token(item):
 
 def main():
     if not os.path.exists(JSON_FILE):
-        print(f"❌ {JSON_FILE} file nahi mili!")
+        print(f" file nahi mili!")
         return
 
     with open(JSON_FILE, "r", encoding="utf-8") as f:
@@ -71,4 +71,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-  
+    
