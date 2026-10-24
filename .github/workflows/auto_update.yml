@@ -1,9 +1,9 @@
-name: Auto Update Tokens Every Hour
+name: Auto Update Tokens
 
 on:
   schedule:
-    - cron: '0 * * * *' # Yeh ab har 1 ghante me automatic run hoga
-  workflow_dispatch: # Manual test karne ke liye button
+    - cron: '0 */5 * * *'  # Har 5 ghante me run hoga
+  workflow_dispatch:        # Manual run karne ke liye
 
 jobs:
   update-tokens:
@@ -18,22 +18,19 @@ jobs:
           python-version: '3.10'
 
       - name: Install Dependencies
-        run: |
-          pip install requests
+        run: pip install requests
 
       - name: Run Token Updater Script
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           ADMIN_ID: ${{ secrets.ADMIN_ID }}
-          API_URL: ${{ secrets.API_URL }}
-        run: |
-          python update_tokens.py
+        run: python update_tokens.py
 
       - name: Commit and Push Changes back to GitHub
         run: |
           git config --global user.name "GitHub Action Bot"
           git config --global user.email "action@github.com"
           git add "account_ind(p).json"
-          git commit -m "Auto-update tokens every hour [skip ci]" || exit 0
+          git commit -m "Auto-update tokens from API [skip ci]" || exit 0
           git push
           
