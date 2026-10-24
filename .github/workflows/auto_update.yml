@@ -29,4 +29,12 @@ jobs:
           API_URL: ${{ secrets.API_URL }}
         run: |
           python update_tokens.py
+
+      - name: Commit and Push Changes back to GitHub
+        run: |
+          git config --global user.name "GitHub Action Bot"
+          git config --global user.email "action@github.com"
+          git add "token_ind.json"
+          git commit -m "Auto-update tokens in token_ind.json [skip ci]" || exit 0
+          git push
           
